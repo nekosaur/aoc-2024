@@ -1,15 +1,15 @@
-import run from "aocrunner";
+import run from "@nekosaur/aocrunner";
 
-const parseInput = (rawInput: string) => rawInput;
+const parse = (input: string) => input.split('\n');
 
-const part1 = (rawInput: string) => {
-  const input = parseInput(rawInput);
+const part1 = (input: string) => {
+  const data = parse(input);
 
   return;
 };
 
-const part2 = (rawInput: string) => {
-  const input = parseInput(rawInput);
+const part2 = (input: string) => {
+  const data = parse(input);
 
   return;
 };

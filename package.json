@@ -4,8 +4,8 @@
   "description": "Advent of Code 2024 - solutions",
   "type": "module",
   "scripts": {
-    "start": "aocrunner day",
-    "build": "aocrunner build",
+    "start": "NODE_NO_WARNINGS=1 aocrunner day",
+    "build": "NODE_NO_WARNINGS=1 aocrunner build",
     "format": "prettier -w src",
     "update:readme": "aocrunner update:readme"
   },
@@ -14,12 +14,21 @@
   ],
   "author": "nekosaur",
   "license": "ISC",
-  "devDependencies": {
-    "@types/node": "^16.11.6",
-    "aocrunner": "^1.10.0",
-    "prettier": "^2.8.0"
+  "dependencies": {
+    "esbuild": "^0.24.2",
+    "tsc-module-loader": "^0.0.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
   },
-  "dependencies": {},
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/node": "^16.11.6",
+    "@nekosaur/aocrunner": "^2.0.4",
+    "eslint": "^9.17.0",
+    "globals": "^15.14.0",
+    "prettier": "^2.8.0",
+    "typescript-eslint": "^8.18.2"
+  },
   "engines": {
     "node": ">=16.13.0"
   }
