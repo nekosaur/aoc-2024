@@ -19,7 +19,7 @@ const blink = memoize((stone: number) => {
   }
 
   return [stone * 2024, null]
-})
+}, { primitive: true })
 
 const count = memoize((stone: number | null, blinks: number) => {
   if (stone == null) return 0
@@ -31,7 +31,7 @@ const count = memoize((stone: number | null, blinks: number) => {
   }
 
   return count(left, blinks - 1) + count(right, blinks - 1)
-})
+}, { primitive: true })
 
 export function day11b(data: string[]) {
   const stones = data[0].split(" ").map(Number)
