@@ -1,18 +1,12 @@
 import memoize from "memoizee"
-
-// log10(x) gives you the y in equation 10 ** y = x
-// so for example log10(6439) = ~3.808
-// by adding 1 and flooring we get the number of digits in any number
-function digits(value: number) {
-  return Math.floor(Math.log10(value) + 1)
-}
+import { num_digits } from "../utils/math"
 
 const blink = memoize((stone: number) => {
   if (stone === 0) {
     return [1, null]
   }
 
-  const d = digits(stone)
+  const d = num_digits(stone)
 
   if (d % 2 === 0) {
     const mid = Math.floor(d / 2)

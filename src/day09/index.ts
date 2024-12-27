@@ -19,10 +19,10 @@ const part2 = (input: string) => {
 run({
   part1: {
     tests: [
-      // {
-      //   input: ``,
-      //   expected: "",
-      // },
+      {
+        input: `2333133121414131402`,
+        expected: 1928,
+      },
     ],
     solution: part1,
   },

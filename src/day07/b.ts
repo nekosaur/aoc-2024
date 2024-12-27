@@ -1,42 +1,41 @@
-function generateCombinationsWithRepetition<T>(values: T[], k: number) {
-  const result = [];
+import { num_digits } from "../utils/math"
 
-  function helper(current) {
-      // If the current combination reaches the desired length, add it to the result
-      if (current.length === k) {
-          result.push([...current]);
-          return;
-      }
+function solve(value: bigint, operands: bigint[]) {
+  const queue: [bigint, bigint[], (string | bigint)[]][] = [
+    [value, operands.slice(), []]
+  ]
 
-      // Iterate through the values and try each value for the current position
-      for (let i = 0; i < values.length; i++) {
-          current.push(values[i]);
-          helper(current); // Recurse without incrementing a "start" index (repetition allowed)
-          current.pop(); // Backtrack
+  while (queue.length) {
+    const [left, ops, solution] = queue.pop()
+
+    if (ops.length === 1 && left === ops[0]) {
+      return true
+    }
+
+    if (!ops.length || left === 0n) continue
+
+    const operand = ops.pop()
+
+    if (left - operand >= 0n) {
+      queue.push([left - operand, ops.slice(), ["+", operand, ...solution]])
+    }
+
+    if (left % operand === 0n) {
+      queue.push([left / operand, ops.slice(), ["*", operand, ...solution]])
+    }
+
+    const left_digits = num_digits(Number(left))
+    const op_digits = num_digits(Number(operand))
+
+    if (op_digits < left_digits) {
+      const new_left = left / BigInt(10 ** op_digits)
+      if (BigInt(`${new_left}${operand}`) === left) {
+        queue.push([left / BigInt(10 ** op_digits), ops.slice(), ["||", operand, ...solution]])
       }
+    }
   }
 
-  helper([]); // Start with an empty combination
-  return result;
-}
-
-type Operation = (a: bigint, b: bigint) => bigint
-
-const add = (a: bigint, b: bigint) => a + b
-const mul = (a: bigint, b: bigint) => a * b
-const concat = (a: bigint, b: bigint) => BigInt(`${a}${b}`)
-
-function solve(value: bigint, numbers: bigint[], operations: Operation[]) {
-  const permutations = generateCombinationsWithRepetition(operations, numbers.length)
-
-  return permutations.map(operations => {
-    let sum = numbers[0]
-    for (let i = 1; i < numbers.length; i++) {
-      const op = operations.shift()
-      sum = op(sum, numbers[i])
-    }
-    return sum
-  }).some(sum => sum === value)
+  return false
 }
 
 export function day7b(data: string[]) {
@@ -46,7 +45,7 @@ export function day7b(data: string[]) {
   })
 
   const valid = equations.filter(({ value, numbers }) => {
-    return solve(value, numbers, [add, mul, concat])
+    return solve(value, numbers)
   })
 
   return valid.reduce((curr, valid) => curr + valid.value, BigInt(0));

@@ -86,3 +86,10 @@ export function extended_gcd(a: number, b: number) {
 export function create_matrix(size: number) {
   return [...Array(size).keys()].map(() => Array(size).fill(0))
 }
+
+// log10(x) gives you the y in equation 10 ** y = x
+// so for example log10(6439) = ~3.808
+// by adding 1 and flooring we get the number of digits in any number
+export function num_digits(value: number) {
+  return Math.floor(Math.log10(value) + 1)
+}

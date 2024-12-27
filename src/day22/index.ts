@@ -29,7 +29,7 @@ run({
   part2: {
     tests: [
       // {
-      //   input: ``,
+      //   input: `123`,
       //   expected: "",
       // },
     ],

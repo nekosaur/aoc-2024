@@ -46,9 +46,7 @@ function get(map: string[][], point: Point) {
 
 function check(map: string[][], start: Point, dir: Direction) {
   let curr = {...start}
-  // console.log("check", dir)
   for (let i = 0; i < XMAS.length; i++) {
-    // console.log("curr", curr, get(map, curr))
     if (get(map, curr) !== XMAS[i]) {
       return false;
     }
@@ -61,12 +59,9 @@ function check(map: string[][], start: Point, dir: Direction) {
 export function day4a(data: string[]) {
   const map = data.map(line => line.split(""))
 
-  // console.log(map)
-
   let count = 0
   for (let y = 0; y < map.length; y++) {
     for (let x = 0; x < map.length; x++) {
-      // console.log("checking", y, x)
       const found = DIRECTIONS.filter(dir => check(map, { x, y }, dir))
 
       count = count + found.length

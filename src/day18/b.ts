@@ -16,19 +16,30 @@ function parse(data: string[], width: number, height: number, bytes?: number) {
 
 const DEBUG = false
 
-export function day18b(data: string[]) {
-  for (let i = 1024; i < data.length; i++) {
-    const size = 71
-    const map = parse(data, size, size, i)
+function solve(data: string[]) {
+  let first = 1024
+  let last = data.length
+  const size = 71
 
-    const path = a_star(map, from_key("0:0"), from_key(`${size - 1}:${size - 1}`))
+  const start = from_key("0:0")
+  const goal = from_key(`${size - 1}:${size - 1}`)
 
-    if (!path) {
-      const pos = data.slice(0, i).at(-1)
-      if (DEBUG) print(map, new Map([[pos.split(',').join(':'), 'Ö']]))
-      return pos
+  while (true) {
+    const mid = first + Math.floor((last - first) / 2)
+
+    if (mid === first) {
+      if (DEBUG) print(parse(data, size, size, first))
+      return data[first]
+    }
+
+    if (a_star(parse(data, size, size, mid), start, goal)) {
+      first = mid
+    } else {
+      last = mid
     }
   }
+}
 
-  throw new Error("Oops, we should have found a solution!")
+export function day18b(data: string[]) {
+  return solve(data)
 }
