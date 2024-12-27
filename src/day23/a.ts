@@ -1,33 +1,23 @@
 import { create_matrix } from '../utils/math';
 
 function find_loops(edges: Map<string, Set<string>>, start: string) {
-  const loops: string[] = []
+  const loops: Set<string> = new Set()
 
-  const queue: [string, string[], Set<string>][] = [[start, [], new Set()]]
+  const queue: [string, string, Set<string>][] = [[start, start, new Set([start])]]
 
   while (queue.length) {
-    const [current, loop, seen] = queue.shift()
+    const [start, current, triangle] = queue.shift()
 
-    if (loop.length > 1 && loops.find(l => l.startsWith(loop.toSorted((a, b) => a.localeCompare(b)).join(',')))) {
-      continue
-    } else if (loop.length === 3 && current === start) {
-      loops.push(loop.toSorted((a, b) => a.localeCompare(b)).join(','))
-      continue
-    } else if (loop.length > 3) {
+    if (triangle.size > 3) {
       continue
     }
-
-    if (seen.has(current)) {
-      continue
-    }
-
-    seen.add(current)
-
-    loop.push(current)
-
 
     for (const edge of edges.get(current)) {
-      queue.push([edge, [...loop], new Set(seen)])
+      if (triangle.size === 3 && edge === start) {
+        loops.add([...triangle.values()].toSorted((a, b) => a.localeCompare(b)).join(','))
+      } else if (!triangle.has(edge)) {
+        queue.push([start, edge, new Set([...triangle.values(), edge])])
+      }
     }
   }
 

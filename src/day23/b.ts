@@ -18,7 +18,7 @@ function parse(data: string[]): [Map<string, Set<string>>, Set<string>] {
 
 // https://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm
 function solve(vertices: Set<string>, edges: Map<string, Set<string>>) {
-  const cliques = []
+  const cliques: Set<string>[] = []
   function bron_kerboch(R: Set<string>, P: Set<string>, X: Set<string>) {
     if (!P.size && !X.size) {
       cliques.push(R)
@@ -42,5 +42,7 @@ export function day23b(data: string[]) {
 
   const cliques = solve(vertices, edges)
 
-  return cliques.map(c => [...c.values()].toSorted((a, b) => a.localeCompare(b)).join(',')).toSorted((a, b) => b.length - a.length)[0]
+  const biggest = cliques.toSorted((a, b) => b.size - a.size).at(0)
+
+  return biggest.values().toArray().toSorted((a, b) => a.localeCompare(b)).join(',')
 }

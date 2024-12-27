@@ -223,9 +223,9 @@ Both parts: 1423.856ms
 
 ```
 Day 23
-Time part 1: 2667.086ms
-Time part 2: 100.426ms
-Both parts: 2767.512ms
+Time part 1: 20.139ms
+Time part 2: 104.173ms
+Both parts: 124.312ms
 ```
 
 ```
@@ -244,7 +244,7 @@ Both parts: 4.058ms
 
 ```
 Total stars: 50/50
-Total time: 10111.484ms
+Total time: 7468.284ms
 ```
 
 <!--/RESULTS-->
